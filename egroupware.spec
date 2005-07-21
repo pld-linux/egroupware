@@ -1,7 +1,8 @@
 # TODO
 # - subpackages
 # - everything
-Summary:	eGroupWare is a web-based groupware suite written in php. 
+Summary:	eGroupWare - a web-based groupware suite written in PHP
+Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.0.0.008
 %define	_rel 2
@@ -23,6 +24,13 @@ eGroupWare is a multi-user, web-based groupware suite developed on a
 custom set of PHP-based APIs. Currently available modules include:
 email, addressbook, calendar, infolog (notes, to-do's, phone calls),
 content management, forum, bookmarks, wiki.
+
+%description -l pl
+eGroupWare to wielou¿ytkownikowe, oparte na WWW oprogramowanie do
+pracy grupowej stworzone na w³asnym zestawie API opartych na PHP.
+Aktualnie dostêpne modu³y obejmuj±: pocztê elektroniczn±, ksi±¿kê
+adresow±, kalendarz, infolog (notatki, rzeczy do zrobienia, rozmowy
+telefoniczne), zarz±dzanie tre¶ci±, forum, zak³adki, wiki.
 
 %prep
 %setup -q -n %{name}
