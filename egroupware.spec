@@ -4,14 +4,13 @@
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
-Version:	1.0.0.008
-%define	_rel 2
-Release:	0.%{_rel}.1
+Version:	1.0.0.009
+Release:	0.1
 Epoch:		0
 License:	GPL
 Group:		Applications/WWW
-Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}-%{_rel}.tar.bz2
-# Source0-md5:	30984ed46fa064632a3f3a1137786cbd
+Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}.tar.bz2
+# Source0-md5:	2ed2f3041ab4ff235f56ed23dfa7274b
 URL:		http://www.egroupware.org/
 Requires:	php >= 3:4.1.2
 BuildArch:	noarch
