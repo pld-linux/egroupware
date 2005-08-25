@@ -5,7 +5,7 @@ Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.0.0.009
-Release:	0.9
+Release:	0.12
 Epoch:		0
 License:	GPL
 Group:		Applications/WWW
@@ -13,10 +13,8 @@ Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}.tar.bz2
 # Source0-md5:	2ed2f3041ab4ff235f56ed23dfa7274b
 Source1:	%{name}.conf
 URL:		http://www.egroupware.org/
+Requires:	%{name}(DB_Driver)
 Requires:	php >= 3:4.1.2
-Requires:	php-mysql
-Requires:	php-pgsql
-#Requires:	php(pgsql||mysql) <- that would be neat
 Requires:	php-pcre
 Requires:	php-gd
 Requires:	php-mbstring
@@ -38,6 +36,33 @@ pracy grupowej stworzone na w³asnym zestawie API opartych na PHP.
 Aktualnie dostêpne modu³y obejmuj±: pocztê elektroniczn±, ksi±¿kê
 adresow±, kalendarz, infolog (notatki, rzeczy do zrobienia, rozmowy
 telefoniczne), zarz±dzanie tre¶ci±, forum, zak³adki, wiki.
+
+%package db-mysql
+Summary:	eGroupware DB Driver for MySQL
+Group:		Applications/WWW
+Provides:	%{name}(DB_Driver) = %{version}-%{release}
+Requires:	php-mysql
+
+%description db-mysql
+This virtual package provides MySQL database backend for eGroupware.
+
+%package db-pgsql
+Summary:	eGroupware DB Driver for PostgreSQL
+Group:		Applications/WWW
+Provides:	%{name}(DB_Driver) = %{version}-%{release}
+Requires:	php-pgsql
+
+%description db-pgsql
+This virtual package provides PostgreSQL database backend for eGroupware.
+
+%package db-mssql
+Summary:	eGroupware DB Driver for MS SQL
+Group:		Applications/WWW
+Provides:	%{name}(DB_Driver) = %{version}-%{release}
+Requires:	php-mssql
+
+%description db-mssql
+This virtual package provides MS SQL database backend for eGroupware.
 
 %prep
 %setup -q -n %{name}
@@ -136,3 +161,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/fudforum/inc
 %{_appdir}/fudforum/setup
 %{_appdir}/fudforum/templates
+
+%files db-mysql
+%defattr(644,root,root,755)
+
+%files db-pgsql
+%defattr(644,root,root,755)
+
+%files db-mssql
+%defattr(644,root,root,755)
