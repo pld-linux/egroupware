@@ -13,6 +13,11 @@ Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}.tar.bz2
 # Source0-md5:	2ed2f3041ab4ff235f56ed23dfa7274b
 URL:		http://www.egroupware.org/
 Requires:	php >= 3:4.1.2
+Requires:	php-mysql
+Requires:	php-pgsql
+Requires:	php-pcre
+Requires:	php-gd
+Requires:	php-mbstring
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
