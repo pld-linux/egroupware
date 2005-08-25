@@ -5,7 +5,7 @@ Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.0.0.009
-Release:	0.4
+Release:	0.7
 Epoch:		0
 License:	GPL
 Group:		Applications/WWW
@@ -84,4 +84,39 @@ rm -rf $RPM_BUILD_ROOT
 %attr(710,root,http) %dir %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %doc doc/*
-%{_appdir}
+%dir %{_appdir}
+%{_appdir}/*.php
+%{_appdir}/addressbook
+%{_appdir}/admin
+%{_appdir}/backup
+%{_appdir}/bookmarks
+%{_appdir}/calendar
+%{_appdir}/comic
+%{_appdir}/developer_tools
+%{_appdir}/email
+%{_appdir}/emailadmin
+%{_appdir}/etemplate
+%{_appdir}/felamimail
+%{_appdir}/filemanager
+%{_appdir}/forum
+%{_appdir}/ftp
+%{_appdir}/fudforum
+%{_appdir}/headlines
+%{_appdir}/infolog
+%{_appdir}/jinn
+%{_appdir}/manual
+%{_appdir}/messenger
+%{_appdir}/news_admin
+%{_appdir}/phpbrain
+%{_appdir}/phpgwapi
+%{_appdir}/phpldapadmin
+%{_appdir}/phpsysinfo
+%{_appdir}/polls
+%{_appdir}/preferences
+%{_appdir}/projects
+%{_appdir}/registration
+%{_appdir}/setup
+%{_appdir}/sitemgr
+%{_appdir}/stocks
+%{_appdir}/tts
+%{_appdir}/wiki
