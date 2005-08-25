@@ -5,7 +5,7 @@ Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.0.0.009
-Release:	0.7
+Release:	0.9
 Epoch:		0
 License:	GPL
 Group:		Applications/WWW
@@ -100,7 +100,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/filemanager
 %{_appdir}/forum
 %{_appdir}/ftp
-%{_appdir}/fudforum
 %{_appdir}/headlines
 %{_appdir}/infolog
 %{_appdir}/jinn
@@ -108,7 +107,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/messenger
 %{_appdir}/news_admin
 %{_appdir}/phpbrain
-%{_appdir}/phpgwapi
 %{_appdir}/phpldapadmin
 %{_appdir}/phpsysinfo
 %{_appdir}/polls
@@ -120,3 +118,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/stocks
 %{_appdir}/tts
 %{_appdir}/wiki
+
+%dir %{_appdir}/phpgwapi
+%{_appdir}/phpgwapi/*.php
+%{_appdir}/phpgwapi/cron
+%{_appdir}/phpgwapi/doc
+%{_appdir}/phpgwapi/inc
+%{_appdir}/phpgwapi/js
+%{_appdir}/phpgwapi/setup
+%{_appdir}/phpgwapi/templates
+%{_appdir}/phpgwapi/themes
+%dir %attr(775,root,http) %{_appdir}/phpgwapi/images
+%{_appdir}/phpgwapi/images/*
+
+%dir %attr(775,root,http) %{_appdir}/fudforum
+%{_appdir}/fudforum/*.php
+%{_appdir}/fudforum/inc
+%{_appdir}/fudforum/setup
+%{_appdir}/fudforum/templates
