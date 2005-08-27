@@ -15,9 +15,9 @@ Source1:	%{name}.conf
 URL:		http://www.egroupware.org/
 Requires:	%{name}(DB_Driver)
 Requires:	php >= 3:4.1.2
-Requires:	php-pcre
 Requires:	php-gd
 Requires:	php-mbstring
+Requires:	php-pcre
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -39,30 +39,46 @@ telefoniczne), zarz±dzanie tre¶ci±, forum, zak³adki, wiki.
 
 %package db-mysql
 Summary:	eGroupware DB Driver for MySQL
+Summary(pl):	Sterownik bazy danych eGroupware dla MySQL-a
 Group:		Applications/WWW
-Provides:	%{name}(DB_Driver) = %{version}-%{release}
 Requires:	php-mysql
+Provides:	%{name}(DB_Driver) = %{version}-%{release}
 
 %description db-mysql
 This virtual package provides MySQL database backend for eGroupware.
 
+%description db-mysql -l pl
+Ten wirtualny pakiet dostarcza backend bazy danych MySQL dla
+eGroupware.
+
 %package db-pgsql
 Summary:	eGroupware DB Driver for PostgreSQL
+Summary(pl):	Sterownik bazy danych eGroupware dla PostgreSQL-a
 Group:		Applications/WWW
-Provides:	%{name}(DB_Driver) = %{version}-%{release}
 Requires:	php-pgsql
+Provides:	%{name}(DB_Driver) = %{version}-%{release}
 
 %description db-pgsql
-This virtual package provides PostgreSQL database backend for eGroupware.
+This virtual package provides PostgreSQL database backend for
+eGroupware.
+
+%description db-pgsql -l pl
+Ten wirtualny pakiet dostarcza backend bazy danych PostgreSQL dla
+eGroupware.
 
 %package db-mssql
 Summary:	eGroupware DB Driver for MS SQL
+Summary(pl):	Sterownik bazy danych eGroupware dla MS SQL-a
 Group:		Applications/WWW
-Provides:	%{name}(DB_Driver) = %{version}-%{release}
 Requires:	php-mssql
+Provides:	%{name}(DB_Driver) = %{version}-%{release}
 
 %description db-mssql
 This virtual package provides MS SQL database backend for eGroupware.
+
+%description db-mssql -l pl
+Ten wirtualny pakiet dostarcza backend bazy danych MS SQL dla
+eGroupware.
 
 %prep
 %setup -q -n %{name}
