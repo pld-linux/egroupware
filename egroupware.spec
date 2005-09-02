@@ -18,6 +18,7 @@ Requires:	php >= 3:4.1.2
 Requires:	php-gd
 Requires:	php-mbstring
 Requires:	php-pcre
+Requires:	php-cli
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
