@@ -5,7 +5,7 @@ Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.0.0.009
-Release:	0.12
+Release:	0.13
 Epoch:		0
 License:	GPL
 Group:		Applications/WWW
@@ -104,6 +104,9 @@ infolog jinn manual messenger news_admin phpbrain phpgwapi phpldapadmin \
 phpsysinfo polls preferences projects registration setup sitemgr stocks tts \
 wiki $RPM_BUILD_ROOT%{_appdir}
 
+#needed by install script
+install header.inc.php.template $RPM_BUILD_ROOT%{_appdir} 
+
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 
 %clean
@@ -128,6 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/*
 %dir %{_appdir}
 %{_appdir}/*.php
+%{_appdir}/header.inc.php.template
 %{_appdir}/addressbook
 %{_appdir}/admin
 %{_appdir}/backup
