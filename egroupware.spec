@@ -1,11 +1,12 @@
 # TODO
-# - subpackages
+# - subpackages for applications
+# - separate htdocs and includedirs
 # - everything
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.0.0.009
-Release:	0.16
+Release:	0.17
 Epoch:		0
 License:	GPL
 Group:		Applications/WWW
@@ -13,13 +14,16 @@ Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}.tar.bz2
 # Source0-md5:	2ed2f3041ab4ff235f56ed23dfa7274b
 Source1:	%{name}.conf
 Patch0:		%{name}-setup.patch
+Patch1:		%{name}-ttfdir.patch
 URL:		http://www.egroupware.org/
+BuildRequires:	sed >= 4.0
 Requires:	%{name}(DB_Driver)
 Requires:	php >= 3:4.1.2
 Requires:	php-gd
 Requires:	php-mbstring
 Requires:	php-pcre
 Requires:	php-cli
+Requires:	fonts-TTF-bitstream-vera
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -100,16 +104,24 @@ eGroupware.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1
 
 # remove CVS control files
 find -name CVS -print0 | xargs -0 rm -rf
+# undos the sources
+find -regex '.*\.\(php\|inc\|html\|txt\|js\)$' -print0 | xargs -0 sed -i -e 's,
+$,,'
+
+%patch0 -p1
+%patch1 -p1
 
 # GPL
 rm -f doc/LICENSE
 
 # no need.
 rm -rf doc/rpm-build
+
+# using PLD package
+rm -rf projects/ttf-bitstream-vera-1.10
 
 %install
 rm -rf $RPM_BUILD_ROOT
