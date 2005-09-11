@@ -5,13 +5,14 @@ Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.0.0.009
-Release:	0.13
+Release:	0.16
 Epoch:		0
 License:	GPL
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}.tar.bz2
 # Source0-md5:	2ed2f3041ab4ff235f56ed23dfa7274b
 Source1:	%{name}.conf
+Patch0:		%{name}-setup.patch
 URL:		http://www.egroupware.org/
 Requires:	%{name}(DB_Driver)
 Requires:	php >= 3:4.1.2
@@ -37,6 +38,22 @@ pracy grupowej stworzone na w³asnym zestawie API opartych na PHP.
 Aktualnie dostêpne modu³y obejmuj±: pocztê elektroniczn±, ksi±¿kê
 adresow±, kalendarz, infolog (notatki, rzeczy do zrobienia, rozmowy
 telefoniczne), zarz±dzanie tre¶ci±, forum, zak³adki, wiki.
+
+%package setup
+Summary:	eGroupware setup package
+Summary(pl):	Pakiet do wstêpnej konfiguracji eGroupware
+Group:		Applications/WWW
+PreReq:		%{name} = %{epoch}:%{version}-%{release}
+
+%description setup
+Install this package to configure initial eGroupware installation. You
+should uninstall this package when you're done, as it considered
+insecure to keep the setup files in place.
+
+%description setup -l pl
+Ten pakiet nale¿y zainstalowaæ w celu wstêpnej konfiguracji eGroupware po
+pierwszej instalacji. Potem nale¿y go odinstalowaæ, jako ¿e
+pozostawienie plików instalacyjnych mog³oby byæ niebezpieczne.
 
 %package db-mysql
 Summary:	eGroupware DB Driver for MySQL
@@ -83,6 +100,7 @@ eGroupware.
 
 %prep
 %setup -q -n %{name}
+%patch0 -p1
 
 # remove CVS control files
 find -name CVS -print0 | xargs -0 rm -rf
@@ -104,10 +122,13 @@ infolog jinn manual messenger news_admin phpbrain phpgwapi phpldapadmin \
 phpsysinfo polls preferences projects registration setup sitemgr stocks tts \
 wiki $RPM_BUILD_ROOT%{_appdir}
 
-#needed by install script
-install header.inc.php.template $RPM_BUILD_ROOT%{_appdir} 
+> $RPM_BUILD_ROOT%{_sysconfdir}/header.php
+ln -s %{_sysconfdir}/header.php $RPM_BUILD_ROOT%{_appdir}/header.inc.php
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+
+# needed by setup script
+install header.inc.php.template $RPM_BUILD_ROOT%{_appdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -128,10 +149,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(710,root,http) %dir %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
+%attr(660,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/header.php
 %doc doc/*
 %dir %{_appdir}
 %{_appdir}/*.php
-%{_appdir}/header.inc.php.template
 %{_appdir}/addressbook
 %{_appdir}/admin
 %{_appdir}/backup
@@ -159,7 +180,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/preferences
 %{_appdir}/projects
 %{_appdir}/registration
-%{_appdir}/setup
 %{_appdir}/sitemgr
 %{_appdir}/stocks
 %{_appdir}/tts
@@ -182,6 +202,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/fudforum/inc
 %{_appdir}/fudforum/setup
 %{_appdir}/fudforum/templates
+
+%files setup
+%defattr(644,root,root,755)
+%{_appdir}/header.inc.php.template
+%{_appdir}/setup
 
 %files db-mysql
 %defattr(644,root,root,755)
