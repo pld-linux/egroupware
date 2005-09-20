@@ -55,8 +55,8 @@ should uninstall this package when you're done, as it considered
 insecure to keep the setup files in place.
 
 %description setup -l pl
-Ten pakiet nale¿y zainstalowaæ w celu wstêpnej konfiguracji eGroupware po
-pierwszej instalacji. Potem nale¿y go odinstalowaæ, jako ¿e
+Ten pakiet nale¿y zainstalowaæ w celu wstêpnej konfiguracji eGroupware
+po pierwszej instalacji. Potem nale¿y go odinstalowaæ, jako ¿e
 pozostawienie plików instalacyjnych mog³oby byæ niebezpieczne.
 
 %package db-mysql
