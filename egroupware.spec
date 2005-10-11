@@ -17,7 +17,7 @@ Patch0:		%{name}-setup.patch
 Patch1:		%{name}-ttfdir.patch
 URL:		http://www.egroupware.org/
 BuildRequires:	sed >= 4.0
-Requires:	%{name}(DB_Driver)
+Requires:	%{name}(DB_Driver) = %{version}-%{release}
 Requires:	php >= 3:4.1.2
 Requires:	php-gd
 Requires:	php-mbstring
