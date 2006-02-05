@@ -1,15 +1,16 @@
 # TODO
 # - subpackages for applications
 # - separate htdocs and includedirs
+# - list of bundled software (to use pld packages instead):
 # - everything
 
 %define	_rc RC6
-%define	_rel 1.1
+%define	_rel 0.1
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.2
-Release:	0.%{_rc}.%{_rel}
+Release:	1.%{_rc}.%{_rel}
 License:	GPL
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}%{_rc}-2.tar.bz2
@@ -18,6 +19,7 @@ Source1:	%{name}.conf
 Patch0:		%{name}-setup.patch
 Patch1:		%{name}-ttfdir.patch
 URL:		http://www.egroupware.org/
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 Requires:	%{name}(DB_Driver) = %{version}-%{release}
 Requires:	fonts-TTF-bitstream-vera
@@ -26,11 +28,15 @@ Requires:	php-cli
 Requires:	php-gd
 Requires:	php-mbstring
 Requires:	php-pcre
+Requires:	webapps
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_appdir %{_datadir}/%{name}
-%define		_sysconfdir /etc/%{name}
+%define		_webapps	/etc/webapps
+%define		_webapp		%{name}
+%define		_sysconfdir	%{_webapps}/%{_webapp}
+%define		_appdir		%{_datadir}/%{_webapp}
+
 %define		_noautoreqfiles	/usr/bin/php
 
 %description
@@ -136,29 +142,66 @@ cp -a */ $RPM_BUILD_ROOT%{_appdir}
 ln -s %{_sysconfdir}/header.php $RPM_BUILD_ROOT%{_appdir}/header.inc.php
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 
 # needed by setup script
 install header.inc.php.template $RPM_BUILD_ROOT%{_appdir}
 
+rm -rf $RPM_BUILD_ROOT%{_appdir}/doc
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%triggerin -- apache1 >= 1.3.33-2
-%apache_config_install -v 1 -c %{_sysconfdir}/apache.conf
+%triggerin -- apache1
+%webapp_register apache %{_webapp}
 
-%triggerun -- apache1 >= 1.3.33-2
-%apache_config_uninstall -v 1
+%triggerun -- apache1
+%webapp_unregister apache %{_webapp}
 
-%triggerin -- apache >= 2.0.0
-%apache_config_install -v 2 -c %{_sysconfdir}/apache.conf
+%triggerin -- apache < 2.2.0, apache-base
+%webapp_register httpd %{_webapp}
 
-%triggerun -- apache >= 2.0.0
-%apache_config_uninstall -v 2
+%triggerun -- apache < 2.2.0, apache-base
+%webapp_unregister httpd %{_webapp}
+
+%triggerpostun -- %{name} < 1.2-1.RC6.0.1
+# rescue app configs
+if [ -f /etc/%{name}/header.php.rpmsave ]; then
+	mv -f %{_sysconfdir}/header.php{,.rpmnew}
+	mv -f /etc/%{name}/header.php.rpmsave %{_sysconfdir}/$i
+fi
+
+# migrate from apache-config macros
+if [ -f /etc/%{name}/apache.conf.rpmsave ]; then
+	if [ -d /etc/apache/webapps.d ]; then
+		cp -f %{_sysconfdir}/apache.conf{,.rpmnew}
+		cp -f /etc/%{name}/apache.conf.rpmsave %{_sysconfdir}/apache.conf
+	fi
+
+	if [ -d /etc/httpd/webapps.d ]; then
+		cp -f %{_sysconfdir}/httpd.conf{,.rpmnew}
+		cp -f /etc/%{name}/apache.conf.rpmsave %{_sysconfdir}/httpd.conf
+	fi
+	rm -f /etc/%{name}/apache.conf.rpmsave
+fi
+
+# migrating from earlier apache-config?
+if [ -L /etc/apache/conf.d/99_%{name}.conf ]; then
+	rm -f /etc/apache/conf.d/99_%{name}.conf
+	/usr/sbin/webapp register apache %{_webapp}
+	%service -q apache reload
+fi
+if [ -L /etc/httpd/httpd.conf/99_%{name}.conf ]; then
+	rm -f /etc/httpd/httpd.conf/99_%{name}.conf
+	/usr/sbin/webapp register httpd %{_webapp}
+	%service -q httpd reload
+fi
 
 %files
 %defattr(644,root,root,755)
-%attr(710,root,http) %dir %{_sysconfdir}
+%dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
 %attr(660,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/header.php
 %doc doc/*
 %dir %{_appdir}
