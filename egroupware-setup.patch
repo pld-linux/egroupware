@@ -28,13 +28,13 @@
  
  				while(list($k,$v) = each($supported_db))
 --- ./setup/index.php	2004-11-17 14:48:22.000000000 +0200
-+++ /tmp/index.php	2005-09-11 16:07:11.000000000 +0300
-@@ -177,7 +177,7 @@
++++ /home/builder/rpm/BUILD/egroupware/setup/index.php	2006-02-05 19:31:35.000000000 +0200
+@@ -201,7 +201,7 @@
  					$setup_tpl->set_var('instr',
- 						lang("Instructions for creating the database in %1:",'MySql')
- 						. '<br>'.lang('Login to mysql -')
--						. '<br><i>[user@server user]# mysql -u root -p</i><br>'
-+						. '<br><i>[user@server user]# mysql -u mysql -p</i><br>'
+ 						'<b>'.lang("Instructions for creating the database in %1:",'MySql').'</b>'
+ 						. '<br />'.lang('Login to mysql -')
+-						. '<br /><i>[user@server user]# <b>mysql -u root -p</b></i><br />'
++						. '<br /><i>[user@server user]# <b>mysql -u mysql -p</b></i><br />'
  						. lang('Create the empty database and grant user permissions -')
- 						. "<br><i>mysql> create database $info[db_name];</i>"
- 						. "<br><i>mysql> grant all on " . $info['db_name']
+ 						. "<br /><i>mysql> <b>CREATE DATABASE $info[db_name]$set_charset;</b></i>"
+ 						. "<br /><i>mysql> <b>GRANT ALL ON " . $info['db_name']

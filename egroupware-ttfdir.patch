@@ -1,21 +1,22 @@
---- ./projects/inc/class.bostatistics.inc.php	2004-11-06 14:15:28.000000000 +0200
-+++ /tmp/class.bostatistics.inc.php	2005-09-11 16:21:20.000000000 +0300
-@@ -142,7 +142,7 @@
- 			if(!function_exists('imagecopyresampled')) 
- 				return false;
- 			
--			DEFINE("TTF_DIR",PHPGW_SERVER_ROOT."/projects/ttf-bitstream-vera-1.10/");
-+			DEFINE("TTF_DIR","/usr/share/fonts/TTF/");
- 			if(file_exists(PHPGW_SERVER_ROOT . '/../jpgraph/src/jpgraph.php'))
- 			{
- 				include(PHPGW_SERVER_ROOT . '/../jpgraph/src/jpgraph.php');
---- ./projects/inc/jpgraph-1.5.2/src/jpgraph_dir.php	2004-06-01 13:38:37.000000000 +0300
-+++ /tmp/jpgraph_dir.php	2005-09-11 16:21:20.000000000 +0300
-@@ -26,6 +26,6 @@
+--- egroupware/projectmanager/inc/class.ganttchart.inc.php~	2006-02-05 17:49:46.000000000 +0200
++++ egroupware/projectmanager/inc/class.ganttchart.inc.php	2006-02-05 19:34:02.000000000 +0200
+@@ -14,7 +14,7 @@
+ 
+ include_once(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.boprojectelements.inc.php');
+ 
+-define('TTF_DIR',EGW_SERVER_ROOT.'/projectmanager/inc/ttf-bitstream-vera-1.10/');
++define('TTF_DIR', '/usr/share/fonts/TTF/');
+ if(file_exists(EGW_SERVER_ROOT . '/../jpgraph/src/jpgraph.php'))
+ {
+ 	include(EGW_SERVER_ROOT . '/../jpgraph/src/jpgraph.php');
+--- egroupware/projectmanager/inc/jpgraph-1.5.2/src/jpgraph_dir.php~	2006-02-05 17:49:46.000000000 +0200
++++ egroupware/projectmanager/inc/jpgraph-1.5.2/src/jpgraph_dir.php	2006-02-05 19:34:55.000000000 +0200
+@@ -25,7 +25,6 @@
+ DEFINE("APACHE_CACHE_DIR","/jpgraph_cache/");
  
  // Directory for TTF fonts. Must end with '/'
- #DEFINE("TTF_DIR","/usr/local/fonts/ttf/");
+-#DEFINE("TTF_DIR","/usr/local/fonts/ttf/");
 -DEFINE("TTF_DIR",PHPGW_SERVER_ROOT."/projects/ttf-bitstream-vera-1.10/");
-+DEFINE("TTF_DIR","/usr/share/fonts/TTF/");
++define('TTF_DIR', '/usr/share/fonts/TTF/');
  
  ?>
