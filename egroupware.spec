@@ -2,28 +2,30 @@
 # - subpackages for applications
 # - separate htdocs and includedirs
 # - everything
+
+%define	_rc RC6
+%define	_rel 1
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
-Version:	1.0.0.009
-Release:	0.18
-Epoch:		0
+Version:	1.2
+Release:	0.%{_rc}.%{_rel}
 License:	GPL
 Group:		Applications/WWW
-Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}.tar.bz2
-# Source0-md5:	2ed2f3041ab4ff235f56ed23dfa7274b
+Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}%{_rc}-2.tar.bz2
+# Source0-md5:	f86c82871c1c6158ee7cfc80996c6d9d
 Source1:	%{name}.conf
 Patch0:		%{name}-setup.patch
 Patch1:		%{name}-ttfdir.patch
 URL:		http://www.egroupware.org/
 BuildRequires:	sed >= 4.0
 Requires:	%{name}(DB_Driver) = %{version}-%{release}
+Requires:	fonts-TTF-bitstream-vera
 Requires:	php >= 3:4.1.2
+Requires:	php-cli
 Requires:	php-gd
 Requires:	php-mbstring
 Requires:	php-pcre
-Requires:	php-cli
-Requires:	fonts-TTF-bitstream-vera
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -48,7 +50,7 @@ telefoniczne), zarz±dzanie tre¶ci±, forum, zak³adki, wiki.
 Summary:	eGroupware setup package
 Summary(pl):	Pakiet do wstêpnej konfiguracji eGroupware
 Group:		Applications/WWW
-PreReq:		%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description setup
 Install this package to configure initial eGroupware installation. You
@@ -109,31 +111,26 @@ eGroupware.
 # remove CVS control files
 find -name CVS -print0 | xargs -0 rm -rf
 # undos the sources
-find -regex '.*\.\(php\|inc\|html\|txt\|js\)$' -print0 | xargs -0 sed -i -e 's,
-$,,'
+find -regex '.*\.\(php\|inc\|html\|txt\|js\)$' -print0 | xargs -0 sed -i -e 's,\r$,,'
 
-%patch0 -p1
-%patch1 -p1
+#%patch0 -p1
+#%patch1 -p1
 
 # GPL
-rm -f doc/LICENSE
+rm doc/LICENSE
 
 # no need.
-rm -rf doc/rpm-build
+rm -r doc/rpm-build
 
 # using PLD package
-rm -rf projects/ttf-bitstream-vera-1.10
+#rm -r projects/ttf-bitstream-vera-1.10
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdir},%{_sysconfdir}}
 
 cp -a *.php $RPM_BUILD_ROOT%{_appdir}
-cp -a addressbook admin backup bookmarks calendar comic developer_tools \
-email emailadmin etemplate felamimail filemanager forum ftp fudforum headlines \
-infolog jinn manual messenger news_admin phpbrain phpgwapi phpldapadmin \
-phpsysinfo polls preferences projects registration setup sitemgr stocks tts \
-wiki $RPM_BUILD_ROOT%{_appdir}
+cp -a */ $RPM_BUILD_ROOT%{_appdir}
 
 > $RPM_BUILD_ROOT%{_sysconfdir}/header.php
 ln -s %{_sysconfdir}/header.php $RPM_BUILD_ROOT%{_appdir}/header.inc.php
@@ -168,35 +165,31 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/*.php
 %{_appdir}/addressbook
 %{_appdir}/admin
-%{_appdir}/backup
 %{_appdir}/bookmarks
 %{_appdir}/calendar
-%{_appdir}/comic
 %{_appdir}/developer_tools
-%{_appdir}/email
 %{_appdir}/emailadmin
 %{_appdir}/etemplate
 %{_appdir}/felamimail
 %{_appdir}/filemanager
-%{_appdir}/forum
-%{_appdir}/ftp
-%{_appdir}/headlines
 %{_appdir}/infolog
 %{_appdir}/jinn
 %{_appdir}/manual
-%{_appdir}/messenger
 %{_appdir}/news_admin
 %{_appdir}/phpbrain
-%{_appdir}/phpldapadmin
-%{_appdir}/phpsysinfo
 %{_appdir}/polls
 %{_appdir}/preferences
-%{_appdir}/projects
 %{_appdir}/registration
 %{_appdir}/sitemgr
-%{_appdir}/stocks
-%{_appdir}/tts
 %{_appdir}/wiki
+%{_appdir}/home
+%{_appdir}/mydms
+%{_appdir}/projectmanager
+%{_appdir}/resources
+%{_appdir}/sambaadmin
+%{_appdir}/syncml
+%{_appdir}/timesheet
+%{_appdir}/workflow
 
 %dir %{_appdir}/phpgwapi
 %{_appdir}/phpgwapi/*.php
@@ -207,14 +200,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/phpgwapi/setup
 %{_appdir}/phpgwapi/templates
 %{_appdir}/phpgwapi/themes
+%{_appdir}/phpgwapi/tests
 %dir %attr(775,root,http) %{_appdir}/phpgwapi/images
 %{_appdir}/phpgwapi/images/*
-
-%dir %attr(775,root,http) %{_appdir}/fudforum
-%{_appdir}/fudforum/*.php
-%{_appdir}/fudforum/inc
-%{_appdir}/fudforum/setup
-%{_appdir}/fudforum/templates
 
 %files setup
 %defattr(644,root,root,755)
