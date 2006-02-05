@@ -4,7 +4,7 @@
 # - everything
 
 %define	_rc RC6
-%define	_rel 1
+%define	_rel 1.1
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
@@ -113,8 +113,8 @@ find -name CVS -print0 | xargs -0 rm -rf
 # undos the sources
 find -regex '.*\.\(php\|inc\|html\|txt\|js\)$' -print0 | xargs -0 sed -i -e 's,\r$,,'
 
-#%patch0 -p1
-#%patch1 -p1
+%patch0 -p1
+%patch1 -p1
 
 # GPL
 rm doc/LICENSE
@@ -123,7 +123,7 @@ rm doc/LICENSE
 rm -r doc/rpm-build
 
 # using PLD package
-#rm -r projects/ttf-bitstream-vera-1.10
+rm -r projectmanager/inc/ttf-bitstream-vera-1.10
 
 %install
 rm -rf $RPM_BUILD_ROOT
