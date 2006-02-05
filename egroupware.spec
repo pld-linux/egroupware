@@ -168,7 +168,7 @@ rm -rf $RPM_BUILD_ROOT
 # rescue app configs
 if [ -f /etc/%{name}/header.php.rpmsave ]; then
 	mv -f %{_sysconfdir}/header.php{,.rpmnew}
-	mv -f /etc/%{name}/header.php.rpmsave %{_sysconfdir}/$i
+	mv -f /etc/%{name}/header.php.rpmsave %{_sysconfdir}/header.php
 fi
 
 # migrate from apache-config macros
