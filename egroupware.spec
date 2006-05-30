@@ -3,9 +3,8 @@
 # - separate htdocs and includedirs
 # - list of bundled software (to use pld packages instead):
 # - everything
-#
-%define	_rel 0.2
-#
+
+%define	_rel 0.3
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
@@ -16,16 +15,20 @@ Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}-2.tar.bz2
 # Source0-md5:	2758792188125086f815e0e412a30904
 Source1:	%{name}.conf
+Source2:	%{name}.cron
 Patch0:		%{name}-setup.patch
 Patch1:		%{name}-ttfdir.patch
 URL:		http://www.egroupware.org/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 Requires:	%{name}(DB_Driver) = %{version}-%{release}
+Requires:	/usr/bin/php
+Requires:	crondaemon
 Requires:	fonts-TTF-bitstream-vera
 Requires:	php >= 3:4.3
 Requires:	php-cli
 Requires:	php-gd
+Requires:	php-imap
 Requires:	php-mbstring
 Requires:	php-pcre
 Requires:	webapps
@@ -36,8 +39,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_webapp		%{name}
 %define		_sysconfdir	%{_webapps}/%{_webapp}
 %define		_appdir		%{_datadir}/%{_webapp}
-
-%define		_noautoreqfiles	/usr/bin/php
 
 %description
 eGroupWare is a multi-user, web-based groupware suite developed on a
@@ -133,7 +134,7 @@ rm -r projectmanager/inc/ttf-bitstream-vera-1.10
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_appdir},%{_sysconfdir}}
+install -d $RPM_BUILD_ROOT{%{_appdir},%{_sysconfdir},/var/lib/%{name}/{default/{files,backup},sessions}}
 
 cp -a *.php $RPM_BUILD_ROOT%{_appdir}
 cp -a */ $RPM_BUILD_ROOT%{_appdir}
@@ -143,6 +144,7 @@ ln -s %{_sysconfdir}/header.php $RPM_BUILD_ROOT%{_appdir}/header.inc.php
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
+install -D %{SOURCE2} $RPM_BUILD_ROOT/etc/cron.d/%{name}
 
 # needed by setup script
 install header.inc.php.template $RPM_BUILD_ROOT%{_appdir}
@@ -164,46 +166,14 @@ rm -rf $RPM_BUILD_ROOT
 %triggerun -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
 
-%triggerpostun -- %{name} < 1.2-1.RC6.0.1
-# rescue app configs
-if [ -f /etc/%{name}/header.php.rpmsave ]; then
-	mv -f %{_sysconfdir}/header.php{,.rpmnew}
-	mv -f /etc/%{name}/header.php.rpmsave %{_sysconfdir}/header.php
-fi
-
-# migrate from apache-config macros
-if [ -f /etc/%{name}/apache.conf.rpmsave ]; then
-	if [ -d /etc/apache/webapps.d ]; then
-		cp -f %{_sysconfdir}/apache.conf{,.rpmnew}
-		cp -f /etc/%{name}/apache.conf.rpmsave %{_sysconfdir}/apache.conf
-	fi
-
-	if [ -d /etc/httpd/webapps.d ]; then
-		cp -f %{_sysconfdir}/httpd.conf{,.rpmnew}
-		cp -f /etc/%{name}/apache.conf.rpmsave %{_sysconfdir}/httpd.conf
-	fi
-	rm -f /etc/%{name}/apache.conf.rpmsave
-fi
-
-# migrating from earlier apache-config?
-if [ -L /etc/apache/conf.d/99_%{name}.conf ]; then
-	rm -f /etc/apache/conf.d/99_%{name}.conf
-	/usr/sbin/webapp register apache %{_webapp}
-	%service -q apache reload
-fi
-if [ -L /etc/httpd/httpd.conf/99_%{name}.conf ]; then
-	rm -f /etc/httpd/httpd.conf/99_%{name}.conf
-	/usr/sbin/webapp register httpd %{_webapp}
-	%service -q httpd reload
-fi
-
 %files
 %defattr(644,root,root,755)
+%doc doc/*
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
 %attr(660,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/header.php
-%doc doc/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/cron.d/%{name}
 %dir %{_appdir}
 %{_appdir}/*.php
 %{_appdir}/addressbook
@@ -220,6 +190,7 @@ fi
 %{_appdir}/news_admin
 %{_appdir}/phpbrain
 %{_appdir}/polls
+%{_appdir}/phpsysinfo
 %{_appdir}/preferences
 %{_appdir}/registration
 %{_appdir}/sitemgr
@@ -245,6 +216,11 @@ fi
 %{_appdir}/phpgwapi/tests
 %dir %attr(775,root,http) %{_appdir}/phpgwapi/images
 %{_appdir}/phpgwapi/images/*
+
+%dir /var/lib/%{name}/default
+%dir %attr(775,root,http) /var/lib/%{name}/default/backup
+%dir %attr(775,root,http) /var/lib/%{name}/default/files
+%dir %attr(775,root,http) /var/lib/%{name}/sessions
 
 %files setup
 %defattr(644,root,root,755)
