@@ -58,10 +58,11 @@ custom set of PHP-based APIs.
 
 This package provides the eGroupWare default applications:
 
-egroupware core with: admin, api, docs, etemplate, preferences, addressbook,
-bookmarks, calendar, translation-tools, emailadmin, felamimail, filemanager,
-infolog, manual, mydms, news admin, knowledgebase, polls, projectmanager,
-resources, sambaadmin, sitemgr, syncml, timesheet, wiki, workflow
+egroupware core with: admin, api, docs, etemplate, preferences,
+addressbook, bookmarks, calendar, translation-tools, emailadmin,
+felamimail, filemanager, infolog, manual, mydms, news admin,
+knowledgebase, polls, projectmanager, resources, sambaadmin, sitemgr,
+syncml, timesheet, wiki, workflow
 
 It also provides an API for developing additional applications.
 
@@ -135,6 +136,7 @@ Manage your bookmarks with eGroupWare. Has Netscape plugin.
 Summary:	The eGroupWare calendar application
 Group:		Applications/WWW
 Requires:	%{name}-core = %{version}-%{release}
+Requires:	%{name}-etemplate = %{version}-%{release}
 
 %description calendar
 Powerful calendar with meeting request system, Alarms, ICal and E-Mail
@@ -346,6 +348,7 @@ This is the polls app for eGroupWare.
 Summary:	The eGroupWare projectmanager application
 Group:		Applications/WWW
 Requires:	%{name}-core = %{version}-%{release}
+Requires:	%{name}-etemplate = %{version}-%{release}
 
 %description projectmanager
 The projectmanager is eGroupWare's new project management application.
@@ -373,6 +376,7 @@ This is the registration app for eGroupWare.
 Summary:	The eGroupWare resources application
 Group:		Applications/WWW
 Requires:	%{name}-core = %{version}-%{release}
+Requires:	%{name}-etemplate = %{version}-%{release}
 
 %description resources
 resources is a resource booking sysmtem for eGroupWare. Which
@@ -406,6 +410,7 @@ This is the stocks app for eGroupWare.
 Summary:	The eGroupWare timesheet application
 Group:		Applications/WWW
 Requires:	%{name}-core = %{version}-%{release}
+Requires:	%{name}-etemplate = %{version}-%{release}
 
 %description timesheet
 Simple timesheet application, which allow to record and report the
@@ -565,33 +570,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/cron.d/%{name}
 %dir %{_appdir}
 %{_appdir}/*.php
-#%{_appdir}/addressbook
 %{_appdir}/admin
-#%{_appdir}/bookmarks
-#%{_appdir}/calendar
-#%{_appdir}/developer_tools
-#%{_appdir}/emailadmin
 %{_appdir}/etemplate
-#%{_appdir}/felamimail
-#%{_appdir}/filemanager
-#%{_appdir}/infolog
-#%{_appdir}/manual
-#%{_appdir}/news_admin
-#%{_appdir}/phpbrain
-#%{_appdir}/polls
-#%{_appdir}/phpsysinfo
 %{_appdir}/preferences
-#%{_appdir}/registration
-#%{_appdir}/sitemgr
-#%{_appdir}/wiki
 %{_appdir}/home
-#%{_appdir}/mydms
-#%{_appdir}/projectmanager
-#%{_appdir}/resources
-#%{_appdir}/sambaadmin
 %{_appdir}/syncml
-#%{_appdir}/timesheet
-#%{_appdir}/workflow
 
 # TODO: to -contrib or subpkg
 %{_appdir}/xmlrpc
