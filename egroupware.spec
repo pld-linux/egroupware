@@ -3,18 +3,18 @@
 # - separate htdocs and includedirs
 # - list of bundled software (to use pld packages instead):
 # - everything
-
-%define	_rc RC6
-%define	_rel 0.1
+#
+%define	_rel 0.2
+#
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.2
-Release:	1.%{_rc}.%{_rel}
+Release:	2.%{_rel}
 License:	GPL
 Group:		Applications/WWW
-Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}%{_rc}-2.tar.bz2
-# Source0-md5:	f86c82871c1c6158ee7cfc80996c6d9d
+Source0:	http://dl.sourceforge.net/egroupware/eGroupWare-%{version}-2.tar.bz2
+# Source0-md5:	2758792188125086f815e0e412a30904
 Source1:	%{name}.conf
 Patch0:		%{name}-setup.patch
 Patch1:		%{name}-ttfdir.patch
@@ -23,7 +23,7 @@ BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 Requires:	%{name}(DB_Driver) = %{version}-%{release}
 Requires:	fonts-TTF-bitstream-vera
-Requires:	php >= 3:4.1.2
+Requires:	php >= 3:4.3
 Requires:	php-cli
 Requires:	php-gd
 Requires:	php-mbstring
@@ -115,7 +115,7 @@ eGroupware.
 %setup -q -n %{name}
 
 # remove CVS control files
-find -name CVS -print0 | xargs -0 rm -rf
+find -name .svn -print0 | xargs -0 rm -rf
 # undos the sources
 find -regex '.*\.\(php\|inc\|html\|txt\|js\)$' -print0 | xargs -0 sed -i -e 's,\r$,,'
 
@@ -216,7 +216,6 @@ fi
 %{_appdir}/felamimail
 %{_appdir}/filemanager
 %{_appdir}/infolog
-%{_appdir}/jinn
 %{_appdir}/manual
 %{_appdir}/news_admin
 %{_appdir}/phpbrain
