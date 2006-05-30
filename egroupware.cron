@@ -1,0 +1,3 @@
+MAILTO=root
+
+*/5 * * * *	http /usr/bin/php /usr/share/egroupware/phpgwapi/cron/asyncwrapper.php
