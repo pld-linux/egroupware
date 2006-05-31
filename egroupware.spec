@@ -3,7 +3,7 @@
 # - list of bundled software (to use pld packages instead):
 # - everything
 
-%define	_rel 0.11
+%define	_rel 0.14
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
@@ -506,6 +506,13 @@ eGroupware.
 %setup -q -n %{name} -a1
 mv %{name}/* .
 
+# remove as did upstream
+rm -rf rpc.php
+rm -rf xmlrpc
+rm -rf switchuser
+rm -rf skel
+rm -rf soap
+
 # remove CVS control files
 find -name .svn -print0 | xargs -0 rm -rf
 # undos the sources
@@ -570,17 +577,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/cron.d/%{name}
 %dir %{_appdir}
 %{_appdir}/*.php
-%{_appdir}/admin
-%{_appdir}/etemplate
-%{_appdir}/preferences
-%{_appdir}/home
-%{_appdir}/syncml
-
-# TODO: to -contrib or subpkg
-%{_appdir}/xmlrpc
-%{_appdir}/soap
-%{_appdir}/switchuser
-%{_appdir}/skel
 
 %dir %{_appdir}/phpgwapi
 %{_appdir}/phpgwapi/*.php
@@ -594,6 +590,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/phpgwapi/tests
 %dir %attr(775,root,http) %{_appdir}/phpgwapi/images
 %{_appdir}/phpgwapi/images/*
+
+# maybe separate these apps?
+%{_appdir}/syncml
+%{_appdir}/admin
+%{_appdir}/etemplate
+%{_appdir}/preferences
+%{_appdir}/home
 
 %dir /var/lib/%{name}/default
 %dir %attr(775,root,http) /var/lib/%{name}/default/backup
