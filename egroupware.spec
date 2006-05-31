@@ -3,7 +3,7 @@
 # - list of bundled software (to use pld packages instead):
 # - everything
 
-%define	_rel 0.14
+%define	_rel 0.15
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
@@ -360,6 +360,7 @@ applications.
 Summary:	The eGroupWare projects application
 Group:		Applications/WWW
 Requires:	%{name}-core = %{version}-%{release}
+Requires:	%{name}-infolog = %{version}-%{release}
 
 %description projects
 This is the projects app for eGroupWare.
