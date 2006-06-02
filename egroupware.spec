@@ -3,7 +3,7 @@
 # - list of bundled software (to use pld packages instead):
 # - everything
 
-%define	_rel 0.15
+%define	_rel 0.20
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
@@ -51,6 +51,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_webapp		%{name}
 %define		_sysconfdir	%{_webapps}/%{_webapp}
 %define		_appdir		%{_datadir}/%{_webapp}
+%define		schemadir	/usr/share/openldap/schema
 
 %description
 eGroupWare is a multi-user, web-based groupware suite developed on a
@@ -503,6 +504,16 @@ This virtual package provides MS SQL database backend for eGroupware.
 Ten wirtualny pakiet dostarcza backend bazy danych MS SQL dla
 eGroupware.
 
+%package -n openldap-schema-egroupware
+Summary:	eGroupWare LDAP schemas
+Group:		Networking/Daemons
+Requires(post,postun):	sed >= 4.0
+Requires:	openldap-servers
+Requires:	sed >= 4.0
+
+%description -n openldap-schema-egroupware
+This package contains phpgwaccount.schema and phpgwcontact.schema for openldap.
+
 %prep
 %setup -q -n %{name} -a1
 mv %{name}/* .
@@ -531,6 +542,11 @@ rm -r doc/rpm-build
 # using PLD package
 rm -r projectmanager/inc/ttf-bitstream-vera-1.10
 
+# support just OpenLDAP
+mv phpgwapi/doc/ldap/phpgw{account,contact}.schema .
+mv phpgwapi/doc/ldap/README README.ldap
+rm -rf phpgwapi/doc/ldap
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdir},%{_sysconfdir},/var/{lib/%{name}/default/{files,backup},run/%{name}}}
@@ -547,6 +563,10 @@ install -D %{SOURCE3} $RPM_BUILD_ROOT/etc/cron.d/%{name}
 
 # needed by setup script
 install header.inc.php.template $RPM_BUILD_ROOT%{_appdir}
+
+# LDAP Schemas
+install -d $RPM_BUILD_ROOT%{schemadir}
+cp -a *.schema $RPM_BUILD_ROOT%{schemadir}
 
 rm -rf $RPM_BUILD_ROOT%{_appdir}/doc
 
@@ -565,9 +585,19 @@ rm -rf $RPM_BUILD_ROOT
 %triggerun core -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
 
+%post -n openldap-schema-egroupware
+%openldap_schema_register %{schemadir}/phpgw{account,contact}.schema
+%service -q ldap restart
+
+%postun -n openldap-schema-egroupware
+if [ "$1" = "0" ]; then
+	%openldap_schema_unregister %{schemadir}/phpgw{account,contact}.schema
+	%service -q ldap restart
+fi
+
 %files
 %defattr(644,root,root,755)
-%doc doc/*
+%doc doc/* README.ldap
 
 %files core
 %defattr(644,root,root,755)
@@ -777,3 +807,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files db-mssql
 %defattr(644,root,root,755)
+
+%files -n openldap-schema-egroupware
+%defattr(644,root,root,755)
+%{schemadir}/phpgwaccount.schema
+%{schemadir}/phpgwcontact.schema
