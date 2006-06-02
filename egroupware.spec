@@ -20,7 +20,7 @@ Source3:	%{name}.cron
 Patch0:		%{name}-setup.patch
 Patch1:		%{name}-ttfdir.patch
 URL:		http://www.egroupware.org/
-BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-addressbook = %{version}-%{release}
 Requires:	%{name}-bookmarks = %{version}-%{release}
