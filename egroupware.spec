@@ -3,7 +3,7 @@
 # - list of bundled software (to use pld packages instead):
 # - everything
 
-%define	_rel 0.20
+%define	_rel 0.23
 Summary:	eGroupWare - a web-based groupware suite written in PHP
 Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
@@ -83,13 +83,13 @@ Requires:	%{name}(DB_Driver) = %{version}-%{release}
 Requires:	/usr/bin/php
 Requires:	crondaemon
 Requires:	fonts-TTF-bitstream-vera
-Requires:	php >= 3:4.3
 Requires:	php-cli
-Requires:	php-gd
-Requires:	php-imap
-Requires:	php-mbstring
-Requires:	php-pcre
+Requires:	php(gd)
+Requires:	php(imap)
+Requires:	php(mbstring)
+Requires:	php(pcre)
 Requires:	webapps
+Requires:	webserver(php) >= 4.3
 Provides:	%{name}-etemplate = %{version}-%{release}
 Provides:	%{name}-syncml = %{version}-%{release}
 
@@ -463,7 +463,7 @@ pozostawienie plików instalacyjnych mog³oby byæ niebezpieczne.
 Summary:	eGroupware DB Driver for MySQL
 Summary(pl):	Sterownik bazy danych eGroupware dla MySQL-a
 Group:		Applications/WWW
-Requires:	php-mysql
+Requires:	php(mysql)
 Provides:	%{name}(DB_Driver) = %{version}-%{release}
 
 %description db-mysql
@@ -479,7 +479,7 @@ eGroupware.
 Summary:	eGroupware DB Driver for PostgreSQL
 Summary(pl):	Sterownik bazy danych eGroupware dla PostgreSQL-a
 Group:		Applications/WWW
-Requires:	php-pgsql
+Requires:	php(pgsql)
 Provides:	%{name}(DB_Driver) = %{version}-%{release}
 
 %description db-pgsql
@@ -494,7 +494,7 @@ eGroupware.
 Summary:	eGroupware DB Driver for MS SQL
 Summary(pl):	Sterownik bazy danych eGroupware dla MS SQL-a
 Group:		Applications/WWW
-Requires:	php-mssql
+Requires:	php(mssql)
 Provides:	%{name}(DB_Driver) = %{version}-%{release}
 
 %description db-mssql
@@ -512,7 +512,8 @@ Requires:	openldap-servers
 Requires:	sed >= 4.0
 
 %description -n openldap-schema-egroupware
-This package contains phpgwaccount.schema and phpgwcontact.schema for openldap.
+This package contains phpgwaccount.schema and phpgwcontact.schema for
+openldap.
 
 %prep
 %setup -q -n %{name} -a1
