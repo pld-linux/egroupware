@@ -5,7 +5,7 @@
 
 %define	_rel 0.23
 Summary:	eGroupWare - a web-based groupware suite written in PHP
-Summary(pl):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
+Summary(pl.UTF-8):   eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.2
 Release:	2.%{_rel}
@@ -69,12 +69,12 @@ It also provides an API for developing additional applications.
 
 Further contributed applications are avalible in single packages.
 
-%description -l pl
-eGroupWare to wielou¿ytkownikowe, oparte na WWW oprogramowanie do
-pracy grupowej stworzone na w³asnym zestawie API opartych na PHP.
-Aktualnie dostêpne modu³y obejmuj±: pocztê elektroniczn±, ksi±¿kê
-adresow±, kalendarz, infolog (notatki, rzeczy do zrobienia, rozmowy
-telefoniczne), zarz±dzanie tre¶ci±, forum, zak³adki, wiki.
+%description -l pl.UTF-8
+eGroupWare to wielouÅ¼ytkownikowe, oparte na WWW oprogramowanie do
+pracy grupowej stworzone na wÅ‚asnym zestawie API opartych na PHP.
+Aktualnie dostÄ™pne moduÅ‚y obejmujÄ…: pocztÄ™ elektronicznÄ…, ksiÄ…Å¼kÄ™
+adresowÄ…, kalendarz, infolog (notatki, rzeczy do zrobienia, rozmowy
+telefoniczne), zarzÄ…dzanie treÅ›ciÄ…, forum, zakÅ‚adki, wiki.
 
 %package core
 Summary:	The eGroupWare core package
@@ -445,7 +445,7 @@ This is the workflow app for eGroupWare.
 
 %package setup
 Summary:	eGroupware setup package
-Summary(pl):	Pakiet do wstêpnej konfiguracji eGroupware
+Summary(pl.UTF-8):   Pakiet do wstÄ™pnej konfiguracji eGroupware
 Group:		Applications/WWW
 Requires:	%{name}-core = %{version}-%{release}
 
@@ -454,14 +454,14 @@ Install this package to configure initial eGroupware installation. You
 should uninstall this package when you're done, as it considered
 insecure to keep the setup files in place.
 
-%description setup -l pl
-Ten pakiet nale¿y zainstalowaæ w celu wstêpnej konfiguracji eGroupware
-po pierwszej instalacji. Potem nale¿y go odinstalowaæ, jako ¿e
-pozostawienie plików instalacyjnych mog³oby byæ niebezpieczne.
+%description setup -l pl.UTF-8
+Ten pakiet naleÅ¼y zainstalowaÄ‡ w celu wstÄ™pnej konfiguracji eGroupware
+po pierwszej instalacji. Potem naleÅ¼y go odinstalowaÄ‡, jako Å¼e
+pozostawienie plikÃ³w instalacyjnych mogÅ‚oby byÄ‡ niebezpieczne.
 
 %package db-mysql
 Summary:	eGroupware DB Driver for MySQL
-Summary(pl):	Sterownik bazy danych eGroupware dla MySQL-a
+Summary(pl.UTF-8):   Sterownik bazy danych eGroupware dla MySQL-a
 Group:		Applications/WWW
 Requires:	php(mysql)
 Provides:	%{name}(DB_Driver) = %{version}-%{release}
@@ -471,13 +471,13 @@ This virtual package provides MySQL database backend for eGroupware.
 
 You will need MySQL server >= 4.0 to use this driver.
 
-%description db-mysql -l pl
+%description db-mysql -l pl.UTF-8
 Ten wirtualny pakiet dostarcza backend bazy danych MySQL dla
 eGroupware.
 
 %package db-pgsql
 Summary:	eGroupware DB Driver for PostgreSQL
-Summary(pl):	Sterownik bazy danych eGroupware dla PostgreSQL-a
+Summary(pl.UTF-8):   Sterownik bazy danych eGroupware dla PostgreSQL-a
 Group:		Applications/WWW
 Requires:	php(pgsql)
 Provides:	%{name}(DB_Driver) = %{version}-%{release}
@@ -486,13 +486,13 @@ Provides:	%{name}(DB_Driver) = %{version}-%{release}
 This virtual package provides PostgreSQL database backend for
 eGroupware.
 
-%description db-pgsql -l pl
+%description db-pgsql -l pl.UTF-8
 Ten wirtualny pakiet dostarcza backend bazy danych PostgreSQL dla
 eGroupware.
 
 %package db-mssql
 Summary:	eGroupware DB Driver for MS SQL
-Summary(pl):	Sterownik bazy danych eGroupware dla MS SQL-a
+Summary(pl.UTF-8):   Sterownik bazy danych eGroupware dla MS SQL-a
 Group:		Applications/WWW
 Requires:	php(mssql)
 Provides:	%{name}(DB_Driver) = %{version}-%{release}
@@ -500,7 +500,7 @@ Provides:	%{name}(DB_Driver) = %{version}-%{release}
 %description db-mssql
 This virtual package provides MS SQL database backend for eGroupware.
 
-%description db-mssql -l pl
+%description db-mssql -l pl.UTF-8
 Ten wirtualny pakiet dostarcza backend bazy danych MS SQL dla
 eGroupware.
 
