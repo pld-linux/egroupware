@@ -5,7 +5,7 @@
 
 %define	_rel 0.23
 Summary:	eGroupWare - a web-based groupware suite written in PHP
-Summary(pl.UTF-8):   eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
+Summary(pl.UTF-8):	eGroupWAre - oparte na WWW oprogramowanie do pracy grupowej napisane w PHP
 Name:		egroupware
 Version:	1.2
 Release:	2.%{_rel}
@@ -445,7 +445,7 @@ This is the workflow app for eGroupWare.
 
 %package setup
 Summary:	eGroupware setup package
-Summary(pl.UTF-8):   Pakiet do wstępnej konfiguracji eGroupware
+Summary(pl.UTF-8):	Pakiet do wstępnej konfiguracji eGroupware
 Group:		Applications/WWW
 Requires:	%{name}-core = %{version}-%{release}
 
@@ -461,7 +461,7 @@ pozostawienie plików instalacyjnych mogłoby być niebezpieczne.
 
 %package db-mysql
 Summary:	eGroupware DB Driver for MySQL
-Summary(pl.UTF-8):   Sterownik bazy danych eGroupware dla MySQL-a
+Summary(pl.UTF-8):	Sterownik bazy danych eGroupware dla MySQL-a
 Group:		Applications/WWW
 Requires:	php(mysql)
 Provides:	%{name}(DB_Driver) = %{version}-%{release}
@@ -477,7 +477,7 @@ eGroupware.
 
 %package db-pgsql
 Summary:	eGroupware DB Driver for PostgreSQL
-Summary(pl.UTF-8):   Sterownik bazy danych eGroupware dla PostgreSQL-a
+Summary(pl.UTF-8):	Sterownik bazy danych eGroupware dla PostgreSQL-a
 Group:		Applications/WWW
 Requires:	php(pgsql)
 Provides:	%{name}(DB_Driver) = %{version}-%{release}
@@ -492,7 +492,7 @@ eGroupware.
 
 %package db-mssql
 Summary:	eGroupware DB Driver for MS SQL
-Summary(pl.UTF-8):   Sterownik bazy danych eGroupware dla MS SQL-a
+Summary(pl.UTF-8):	Sterownik bazy danych eGroupware dla MS SQL-a
 Group:		Applications/WWW
 Requires:	php(mssql)
 Provides:	%{name}(DB_Driver) = %{version}-%{release}
